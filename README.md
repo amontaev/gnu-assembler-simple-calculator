@@ -1,6 +1,4 @@
-**GNU-ASSEMBLER-SIMPLE-CALCULATOR**
-
-### Описание
+# GNU-ASSEMBLER-SIMPLE-CALCULATOR
 
 Проект представляет собой небольшой калькулятор, который работает следующим образом:
 
@@ -9,14 +7,15 @@
 3. Ввод второго числа
 4. Вывод результата в консоли
 
-### Требования
+## Требования
 
 - OS Linux
+- CMake
 
-### Build
+## Build
 
 - sudo bash build.sh
 
-### Run
+## Run
 
 - ./build/app.exe
