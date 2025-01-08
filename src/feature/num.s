@@ -6,15 +6,15 @@ msg_error_tonum_length=.-msg_error_tonum
 
 .text
 num:
-    movq %rbp, %r15
+    pushq %rbp
     movq %rsp, %rbp
 
-    pushq %r9
-    pushq %r10
+    movq %r9, %rsi
+    movq %r10, %rdx
     call write
 
-    pushq %r13
-    pushq %r14
+    movq %r13, %rsi
+    movq %r14, %rdx
     call read
 
     pushq %r13
@@ -23,16 +23,13 @@ num:
     call tonum
 
     cmpq $0, %r14
-    jne input_num_end_with_error
+    jne error_input_num
 
-    movq %rbp, %rsp
-    movq %r15, %rbp
-
-    ret
-
-input_num_end_with_error:
-    pushq $msg_error_tonum
-    pushq $msg_error_tonum_length
+    jmp num_end
+error_input_num:
+    movq $msg_error_tonum, %rsi
+    movq $msg_error_tonum_length, %rdx
     call write
-    movq %rbp, %rsp
-    jmp exit
+num_end:
+    leave
+    ret

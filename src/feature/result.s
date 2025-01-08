@@ -6,7 +6,7 @@ msg_error_operation_length=.-msg_error_operation
 
 .text
 result:
-    movq %rbp, %r15
+    pushq %rbp
     movq %rsp, %rbp
 
     call calculate
@@ -35,11 +35,10 @@ point:
     addq $1, %rcx
 
     movq %r14, %rax
-
+    movq $0, %r14
 whole_part:
     movq $result_str, %rdi
     jmp tostr
-
 result_str:
     subq $1, %rsp
     movb $61, 0(%rsp)
@@ -65,20 +64,14 @@ result_str:
     addq $7, %rcx
 
     // Вывод результата
-    pushq %rsp
-    pushq %rcx
+    movq %rsp, %rsi
+    movq %rcx, %rdx
     call write
-
-    movq %rbp, %rsp
-    movq %r15, %rbp
-
-    ret
-
+    jmp result_end
 error_operation:
-    pushq $msg_error_operation
-    pushq $msg_error_operation_length
+    movq $msg_error_operation, %rsi
+    movq $msg_error_operation_length, %rdx
     call write
-    movq %rbp, %rsp
-    movq %r15, %rbp
-
+result_end:
+    leave
     ret

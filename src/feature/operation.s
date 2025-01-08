@@ -9,21 +9,15 @@ operation_str_input_length=.-operation_str_input
 
 .text
 operation:
-    movq %rbp, %r15
-    movq %rsp, %rbp
-
-    pushq $operation_str
-    pushq $operation_str_length
+    movq $operation_str, %rsi
+    movq $operation_str_length, %rdx
     call write
 
-    pushq $operation_str_input
-    pushq $operation_str_input_length
+    movq $operation_str_input, %rsi
+    movq $operation_str_input_length, %rdx
     call read
     movq $0, %rax
     movb 0(%rsi), %al
     movq %rax, %r12
-    
-    movq %rbp, %rsp
-    movq %r15, %rbp
 
     ret

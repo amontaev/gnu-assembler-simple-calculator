@@ -22,11 +22,14 @@ step_num1:
     movq $first_number_input, %r13
     movq $first_number_input_length, %r14
     call num
+
+    cmpq $0, %r14
+    jne end
+    
     movq %rdi, %r10
     movq %rbp, %rsp
 step_operation:
     call operation
-    movq %rbp, %rsp
 step_num2:
     movq $second_number_str, %r9
 
@@ -37,11 +40,14 @@ step_num2:
     movq $second_number_input_length, %r14
     call num
 
+    cmpq $0, %r14
+    jne end
+
     popq %r10
     movq %rdi, %r13
     movq %rbp, %rsp
 step_calculate:
     call result
-    movq %rbp, %rsp
 end:
+    movq %rbp, %rsp
     jmp exit
